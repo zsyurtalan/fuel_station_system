@@ -1,0 +1,161 @@
+{
+  "gasstations": {
+    "qTimeStamp": "2026-03-15T11:20:00+02:00",
+    "requestData": {
+      "userLocation": {
+        "lat": 37.9838,
+        "long": 23.7275
+      },
+      "msg":"Service will not be available on Monday from 02:00 to 04:00."
+    },
+    "country": {
+      "country_name": "Greece",
+      "country_id": "Gr",
+      "municipalities": [
+        {
+          "m_name": "Athens",
+          "m_id": "ATH",
+          "stations": [
+            {
+              "company_name": "Shell",
+              "id": "SHL01",
+              "brandInfo": {
+                "brand": "Shell",
+                "brand_id": "SHL"
+              },
+              "location": {
+                "station_address":"12 Amelias Avenue,Syntagma",
+                "coordinates": {
+                  "latitude": 37.9838,
+                  "longitude": 23.7275
+                },
+                "distance_to_user": {
+                  "value": 2.4,
+                  "unit": "km"
+                }
+              },
+              "phone": ["+30 210 1234567"],
+              "operation_info": {
+                "h24": true
+              },
+              "fuel_types": [
+                {
+                  "name": "unleaded 95",
+                  "code": 1,
+                  "price": {
+                    "value": 1.82,
+                    "currency": "EUR",
+                    "unit": "lt"
+                  },
+                  "priceTimestamp": "2026-03-13T10:30"
+                },
+                {
+                  "name": "diesel",
+                  "code": 2,
+                  "price": {
+                    "value": 1.75,
+                    "currency": "EUR",
+                    "unit": "lt"
+                  },
+                  "priceTimestamp": "2026-03-13T08:00"
+                }
+              ]
+            },
+            {
+              "company_name": "BP",
+              "id": "BP01",
+              "brandInfo": {
+                "brand": "BP",
+                "brand_id": "BP"
+              },
+              "location": {
+                "station_address":"48 Vasilissis Sofias Avenue, Athens",
+                "coordinates": {
+                  "latitude": 37.9297,
+                  "longitude": 23.7431
+                },
+                "distance_to_user": {
+                  "value": 2.0,
+                  "unit": "km"
+                }
+              },
+              "phone": ["+30 210 2222222"],
+              "operation_info": {
+                "h24": false
+              },
+              "fuel_types": [
+                {
+                  "name": "LPG",
+                  "code": 3,
+                  "price": {
+                    "value": 0.96,
+                    "currency": "EUR",
+                    "unit": "lt"
+                  },
+                  "priceTimestamp": "2026-03-14T10:05"
+                },
+                {
+                  "name": "diesel",
+                  "code": 2,
+                  "price": {
+                    "value": 1.74,
+                    "currency": "EUR",
+                    "unit": "lt"
+                  },
+                  "priceTimestamp":"2026-03-14T10:05"
+                }
+              ]
+            },
+            {
+              "company_name": "Revoil",
+              "id": "RVL01",
+              "brandInfo": {
+                "brand": "Revoil",
+                "brand_id": "RVL"
+              },
+              "location": {
+                "station_address":"Domokou,Athina 10445",
+                "coordinates": {
+                  "latitude": 37.9838,
+                  "longitude": 23.7275
+                },
+                "distance_to_user": {
+                  "value": 2.4,
+                  "unit": "km"
+                }
+              },
+              "phone": ["+30 216 9396357"],
+              "operation_info": {
+                "h24": true
+              },
+              "fuel_types": [
+                {
+                  "name": "petrol",
+                  "code": 1,
+                  "price": {
+                    "value": 1.91,
+                    "currency": "EUR",
+                    "unit": "lt"
+                  },
+                  "priceTimestamp": "2026-03-13T10:30"
+                },
+                {
+                  "name": "diesel",
+                  "code": 2,
+                  "price": {
+                    "value": 1.75,
+                    "currency": "EUR",
+                    "unit": "lt"
+                  },
+                  "priceTimestamp":"2026-03-13T08:00"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "totalcount":1
+    }
+  }
+}
+	

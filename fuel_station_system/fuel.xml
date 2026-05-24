@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gasstations [
+    <!ELEMENT gasstations (requestData, country)>
+    <!ATTLIST gasstations qTimeStamp CDATA #REQUIRED>
+
+    <!ELEMENT requestData (userLocation, msg)>
+    <!ELEMENT userLocation (lat, long)>
+    <!ELEMENT lat (#PCDATA)>
+    <!ELEMENT long (#PCDATA)>
+    <!ELEMENT msg (#PCDATA)>
+
+    <!ELEMENT country (municipalities)>
+    <!ATTLIST country
+        country_name CDATA #REQUIRED
+        country_id CDATA #REQUIRED>
+
+    <!ELEMENT municipalities (municipality+, totalcount?)>
+
+    <!ELEMENT municipality (stations)>
+    <!ATTLIST municipality
+        m_name CDATA #REQUIRED
+        m_id CDATA #REQUIRED>
+
+    <!ELEMENT totalcount (#PCDATA)>
+
+    <!ELEMENT stations (station+)>
+
+    <!ELEMENT station (brandInfo?, location, phone?, operation_info, fuel_types)>
+    <!ATTLIST station
+        company_name CDATA #REQUIRED
+        id CDATA #REQUIRED>
+
+    <!ELEMENT brandInfo EMPTY>
+    <!ATTLIST brandInfo
+        brand CDATA #REQUIRED
+        brand_id CDATA #REQUIRED>
+
+    <!ELEMENT location (station_address, coordinates, distance_to_user)>
+    <!ELEMENT station_address (#PCDATA)>
+    <!ELEMENT coordinates (latitude, longitude)>
+    <!ELEMENT latitude (#PCDATA)>
+    <!ELEMENT longitude (#PCDATA)>
+
+    <!ELEMENT distance_to_user (#PCDATA)>
+    <!ATTLIST distance_to_user
+        unit CDATA #REQUIRED>
+
+    <!ELEMENT phone (#PCDATA)>
+
+    <!ELEMENT operation_info (h24)>
+    <!ELEMENT h24 (#PCDATA)>
+
+    <!ELEMENT fuel_types (fuel+)>
+
+    <!ELEMENT fuel (price, priceTimestamp)>
+    <!ATTLIST fuel
+        name CDATA #REQUIRED
+        code CDATA #REQUIRED>
+
+    <!ELEMENT price (#PCDATA)>
+    <!ATTLIST price
+        currency CDATA #REQUIRED
+        unit CDATA #REQUIRED>
+
+    <!ELEMENT priceTimestamp (#PCDATA)>
+]>
+
+
+<gasstations qTimeStamp="2026-03-15T11:20:00+02:00">
+    <requestData>
+        <userLocation>
+            <lat>37.9838</lat>
+            <long>23.7275</long>
+        </userLocation>
+        <msg>Service will not be available on Monday from 02:00 to 04:00.</msg>
+    </requestData>
+    <country country_name="Greece"  country_id="Gr">
+        <municipalities>
+            <municipality m_name="Athens" m_id="ATH">
+                <stations>
+                    <station company_name="Shell" id="SHL01">
+                        <brandInfo brand="Shell" brand_id="SHL"/>
+                        <location>
+                            <station_address>12 Amelias Avenue,Syntagma</station_address>
+                            <coordinates>
+                                <latitude>37.9838</latitude>
+                                <longitude>23.7275</longitude>
+                            </coordinates>
+                            <distance_to_user unit="km">2.4    </distance_to_user>
+                        </location>
+                        
+                        <phone>+30 210 1234567</phone>
+                        <operation_info>
+                            <h24>true</h24>
+                        </operation_info>
+                        <fuel_types>
+                            <fuel name="unleaded 95" code="1">
+                                <price currency="EUR" unit="lt">1.82</price>
+                                <priceTimestamp>2026-03-13T10:30</priceTimestamp>
+                            </fuel>
+                            
+                            <fuel name="diesel" code="2">
+                                <price currency="EUR" unit="lt">1.75</price>
+                                <priceTimestamp>2026-03-13T08:00</priceTimestamp>
+                            </fuel>
+                        </fuel_types>
+                    </station>
+                    
+                    <station company_name="BP" id="BP01">
+                        <brandInfo brand="BP" brand_id="BP"/>
+                        <location>
+                            <station_address>48 Vasilissis Sofias Avenue, Athens</station_address>
+                            <coordinates>
+                                <latitude>37.9297</latitude>
+                                <longitude>23.7431</longitude>
+                            </coordinates>
+                            <distance_to_user unit="km">2.0    </distance_to_user>
+                        </location>
+                        <phone>+30 210 2222222</phone>
+                        <operation_info>
+                            <h24>false</h24>
+                        </operation_info>
+                        <fuel_types>
+                            <fuel name="LPG" code="3">
+                                <price currency="EUR" unit="lt">0.96</price>
+                                <priceTimestamp>2026-03-14T10:05</priceTimestamp>
+                            </fuel>
+                            
+                            <fuel name="diesel" code="2">
+                                <price currency="EUR" unit="lt">1.74</price>
+                                <priceTimestamp>2026-03-14T10:05</priceTimestamp>
+                            </fuel>
+                        </fuel_types>
+                    </station>
+                    <station company_name="Revoil" id="RVL01">
+			            <brandInfo brand="Revoil" brand_id="RVL"/>
+                        <location>
+                            <station_address>Domokou,Athina 10445</station_address>
+                            <coordinates>
+                                <latitude>37.9838</latitude>
+                                <longitude>23.7275</longitude>
+                            </coordinates>
+                            <distance_to_user unit="km">2.4    </distance_to_user>
+                        </location>
+                        
+                        <phone>+30 216 9396357</phone>
+                        <operation_info>
+                            <h24>true</h24>
+                        </operation_info>
+                        <fuel_types>
+                            <fuel name="petrol" code="1">
+                                <price currency="EUR" unit="lt">1.91</price>
+                                <priceTimestamp>2026-03-13T10:30</priceTimestamp>
+                            </fuel>
+                            
+                            <fuel name="diesel" code="2">
+                                <price currency="EUR" unit="lt">1.75</price>
+                                <priceTimestamp>2026-03-13T08:00</priceTimestamp>
+                            </fuel>
+                        </fuel_types>
+                    </station>
+                    
+                </stations>
+            </municipality>
+            <totalcount>1</totalcount>
+        </municipalities>
+    </country>
+</gasstations>

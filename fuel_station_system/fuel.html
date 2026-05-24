@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fuel App</title>
+  <style>
+    body {
+      margin:0;
+      font-family:Arial;
+    }
+    .container {
+      display:flex;
+      height:100vh;
+    }
+    .left {
+      width:150px;
+      background-color:yellow;
+      color:orangered;
+      padding:10px;
+      display:flex;
+      flex-direction:column;
+      height:100vh;
+    }
+    .footer-text {
+      margin-top:450px;
+      text-align:center;
+      font-size:14px;
+      text-align:center;
+      opacity:0.7;
+    }
+    .right {
+      flex:1;
+      padding:20px;
+      background-color:whitesmoke;
+      overflow-y:auto;
+    }
+    button {
+      width:100%;
+      padding:10px;
+      margin-top:10px;
+      cursor:pointer;
+      border-radius:20px;
+    }
+    .card {
+      background:white;
+      padding:15px;
+      margin-bottom:15px;
+      border-radius:8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!--sol panel-->
+    <div class="left">
+      <h3>Menu</h3>
+      <button onclick="loadXML()">Load XML</button>
+      <button onclick="loadJSON()">Load JSON</button>
+      <button onclick="clearPanel()">Clear</button>
+      <div class='footer-text'>
+        by Zeynep Sıla,2026
+      </div>
+    </div>
+    <!--Sağ panel-->
+    <div class="right" id="result">
+      <h2>Data will appear here...</h2>
+    </div>
+  </div>
+
+  <script>
+    let currentdatatype='';
+    //function for loading xml file
+    function loadXML() {
+      currentdatatype='xml';
+      fetch('fuel.xml')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("fuel.xml could not be loaded");
+          }
+          return response.text();
+        })
+        .then(str=>{
+          const parser=new DOMParser();
+          const xml=parser.parseFromString(str,"application/xml");
+          const parseError=xml.getElementsByTagName("parsererror");
+          if(parseError.length > 0) {
+            throw new Error("XML format is invalid");
+          }
+          const stations=xml.getElementsByTagName("station");
+          let output = "";
+          //infos for each station
+          for (let i=0; i<stations.length;i++) {
+            const companyName=stations[i].getAttribute("company_name") || "";
+            const stationId=stations[i].getAttribute("id") || "";
+
+            const brandNode=stations[i].getElementsByTagName("brandInfo")[0];
+            const brand= brandNode ? brandNode.getAttribute("brand") : "";
+
+            const addressNode=stations[i].getElementsByTagName("station_address")[0];
+            const address=addressNode ? addressNode.textContent.trim() : "";
+
+            const distanceNode=stations[i].getElementsByTagName("distance_to_user")[0];
+            const distance=distanceNode ? distanceNode.textContent.trim() : "";
+            const distanceUnit=distanceNode ? distanceNode.getAttribute("unit") : "";
+
+            const phoneNode=stations[i].getElementsByTagName("phone")[0];
+            const phone=phoneNode ? phoneNode.textContent.trim() : "No phone";
+
+            const h24Node=stations[i].getElementsByTagName("h24")[0];
+            const h24=h24Node ? h24Node.textContent.trim() : "";
+
+            output += `
+                <div class="card">
+                  <h3>${companyName}</h3>
+                  <p><strong>Station ID:</strong> ${stationId}</p>
+                  <p><strong>Brand:</strong> ${brand}</p>
+                  <p><strong>Address:</strong> ${address}</p>
+                  <p><strong>Distance:</strong> ${distance} ${distanceUnit}</p>
+                  <p><strong>Phone:</strong> ${phone}</p>
+                  <p><strong>Open 24 Hours:</strong> ${h24}</p>
+                  <p><strong>Fuel types:</strong></p>
+                  <ul>
+
+                
+              `;
+              const fuelTypes=stations[i].getElementsByTagName("fuel_types")[0];
+              const fuelTypeList=fuelTypes ? fuelTypes.getElementsByTagName("fuel") : [];
+              for(let j=0; j<fuelTypeList.length;j++) {
+                const fuelName=fuelTypeList[j].getAttribute('name');
+                const fuelCode=fuelTypeList[j].getAttribute('code');
+                const priceNode=fuelTypeList[j].getElementsByTagName("price")[0];
+                const price=priceNode ? priceNode.textContent.trim() : "";
+                output += `<li>${fuelName} | Code: ${fuelCode} | Price: €${price}</li>`;
+              }
+              output += `
+                  </ul>
+                </div>
+              `;
+          }
+          document.getElementById("result").innerHTML =
+            output || "<p>No station data found in XML.</p>";
+        })
+        .catch(error => {
+          document.getElementById("result").innerHTML = `<p>XML error: ${error.message}</p>`;
+          console.error("XML error:", error);
+        });
+    }
+    //function for loading json file
+    function loadJSON() {
+      currentdatatype='json';
+      fetch('fuel.json')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("fuel.json could not be loaded");
+          }
+          return response.json();
+        })
+        .then(data => {
+          const stations = data.gasstations?.country?.municipalities?.[0]?.stations || [];
+          let output = "";
+
+          stations.forEach(station =>{
+            const companyName=station.company_name || "";
+            const stationId= station.id || "";
+            const brand=station.brandInfo?.brand || "";
+            const address=station.location?.station_address || "";
+            const distanceValue=station.location?.distance_to_user?.value ?? "";
+            const distanceUnit=station.location?.distance_to_user?.unit || "";
+            const phone=station.phone?.[0] || "";
+            const h24=station.operation_info?.h24 ?? "";
+
+            output += `
+              <div class="card">
+                <h3>${companyName}</h3>
+                <p><strong>Station ID:</strong> ${stationId}</p>
+                <p><strong>Brand:</strong> ${brand}</p>
+                <p><strong>Address:</strong> ${address}</p>
+                <p><strong>Distance:</strong> ${distanceValue} ${distanceUnit}</p>
+                <p><strong>Phone:</strong> ${phone}</p>
+                <p><strong>Open 24 Hours:</strong> ${h24}</p>
+                <p><strong>Fuel types:</strong></p>
+                <ul>
+            `;
+            const fuelTypesList=station.fuel_types || [];
+            fuelTypesList.forEach(fuel => {
+              const fuelName=fuel.name || "";
+              const fuelCode=fuel.code || "";
+              const price=fuel.price?.value??"";
+              output += `<li>${fuelName} | Code: ${fuelCode} | Price: €${fuel.price.value}</li>`;
+            }); 
+            output += `
+                </ul>
+              </div>
+            `;
+          });
+
+          document.getElementById("result").innerHTML =
+            output || "<p>No station data found in JSON.</p>";
+        })
+        .catch(error => {
+          document.getElementById("result").innerHTML = `<p>JSON error: ${error.message}</p>`;
+          console.error("JSON error:", error);
+        });
+    }
+    //function for cleaning
+    function clearPanel() {
+      if(currentdatatype==='xml'){
+        document.getElementById("result").innerHTML = "<h2>XML data cleared</h2>";
+      }
+      else if(currentdatatype==='json'){
+        document.getElementById("result").innerHTML = "<h2>JSON data cleared</h2>";
+      }
+      else{
+        document.getElementById("result").innerHTML = "<h2>Nothing to clear</h2>";
+      }
+      currentdatatype='';
+    }
+  </script>
+
+</body>
+</html>
